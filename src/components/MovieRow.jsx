@@ -1,6 +1,6 @@
 import MovieCard from "./MovieCard";
 
-export default function MovieRow({ title, movies, visible, onMovieClick }) {
+export default function MovieRow({ title, movies, visible, onMovieClick, onViewMore}) {
   return (
     <section className="px-8 md:px-16 lg:px-24 mb-12 transition-all duration-700"
       style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(10px)" }}
@@ -26,6 +26,7 @@ export default function MovieRow({ title, movies, visible, onMovieClick }) {
       {movies.length > 6 && (
         <footer className="mt-4 flex justify-end">
           <button
+             onClick={onViewMore}
             className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
             aria-label={`View more ${title} movies`}>
             View More

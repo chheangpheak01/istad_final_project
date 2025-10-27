@@ -1,7 +1,7 @@
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import MovieRow from './MovieRow';
 
-export function MovieSections({ popular, upcoming, topRated, nowPlaying, onMovieClick }) {
+export function MovieSections({ popular, upcoming, topRated, nowPlaying, onMovieClick,  onViewMore}) {
   const [popularRef, popularVisible] = useIntersectionObserver();
   const [upcomingRef, upcomingVisible] = useIntersectionObserver();
   const [topRatedRef, topRatedVisible] = useIntersectionObserver();
@@ -16,6 +16,7 @@ export function MovieSections({ popular, upcoming, topRated, nowPlaying, onMovie
             movies={popular.movies}
             visible={popularVisible}
             onMovieClick={onMovieClick}
+            onViewMore={() => onViewMore('popular')}
           />
         </div>
       )}
@@ -26,6 +27,7 @@ export function MovieSections({ popular, upcoming, topRated, nowPlaying, onMovie
             movies={upcoming.movies}
             visible={upcomingVisible}
             onMovieClick={onMovieClick}
+            onViewMore={() => onViewMore('upcoming')}
           />
         </div>
       )}
@@ -36,6 +38,7 @@ export function MovieSections({ popular, upcoming, topRated, nowPlaying, onMovie
             movies={topRated.movies}
             visible={topRatedVisible}
             onMovieClick={onMovieClick}
+            onViewMore={() => onViewMore('top-rated')}
           />
         </div>
       )}
@@ -46,6 +49,7 @@ export function MovieSections({ popular, upcoming, topRated, nowPlaying, onMovie
             movies={nowPlaying.movies}
             visible={nowPlayingVisible}
             onMovieClick={onMovieClick}
+            onViewMore={() => onViewMore('now-playing')}
           />
         </div>
       )}

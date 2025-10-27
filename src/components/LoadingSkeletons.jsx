@@ -184,24 +184,40 @@ export const MovieDetailSkeleton = () => (
     </div>
 );
 
-// Popular Movies Skeleton
-export const PopularMoviesSkeleton = () => (
-    <div className="bg-gray-900 min-h-screen text-white py-8">
-        <div className="container mx-auto px-4">
-            <div className="text-center mb-12 animate-pulse">
-                <div className="h-12 bg-gray-700 rounded w-64 mx-auto mb-4"></div>
-                <div className="h-4 bg-gray-700 rounded w-96 mx-auto mb-2"></div>
-                <div className="h-4 bg-gray-700 rounded w-48 mx-auto"></div>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-                {[...Array(20)].map((_, index) => (
-                    <div key={index} className="animate-pulse">
-                        <div className="w-full h-64 bg-gray-700 rounded-lg mb-3"></div>
-                        <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
-                        <div className="h-3 bg-gray-700 rounded w-1/2"></div>
-                    </div>
-                ))}
-            </div>
-        </div>
+export function MovieGridSkeleton() {
+  const skeletonItems = Array.from({ length: 18 });
+  return (
+    <div className="bg-gray-900 min-h-screen text-white pt-24 pb-8">
+      <div className="container mx-auto px-4">
+        <header className="text-center mb-12">
+          <div className="h-12 bg-gray-800 rounded w-80 mx-auto mb-6 animate-pulse"></div>
+          <div className="h-5 bg-gray-800 rounded w-3/4 max-w-2xl mx-auto mb-4 animate-pulse"></div>
+          <div className="h-4 bg-gray-800 rounded w-1/2 max-w-md mx-auto mb-6 animate-pulse"></div>
+          <div className="h-4 bg-gray-800 rounded w-40 mx-auto animate-pulse"></div>
+        </header>
+        <section aria-label="Movies skeleton">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 mb-8 justify-items-center">
+            {skeletonItems.map((_, i) => (
+              <div
+                key={i}
+                className="w-44 md:w-52 lg:w-56 rounded-lg overflow-hidden shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer bg-gray-800 p-2 animate-pulse">
+                <figure className="relative">
+                  <div className="w-full h-64 bg-gray-700 rounded-md"></div>
+                </figure>
+                
+                <div className="p-3 bg-gray-900/80 text-white rounded-b-md space-y-2">
+                  <div className="h-5 bg-gray-700 rounded w-full"></div>
+                  <div className="h-4 bg-gray-700 rounded w-3/4"></div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-4 h-4 bg-gray-700 rounded"></div>
+                    <div className="h-4 bg-gray-700 rounded w-8"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
     </div>
-);
+  );
+}

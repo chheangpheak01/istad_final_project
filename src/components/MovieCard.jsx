@@ -23,8 +23,7 @@ export default function MovieCard({ movie, onMovieClick }) {
         <img
           src={`${IMAGE_BASE_URL}${movie.poster_path}`}
           alt={`Poster for ${movie.title}`}
-          className="w-full h-64 object-cover rounded-md"
-        />
+          className="w-full h-64 object-cover rounded-md"/>
       </figure>
       <div className="p-3 bg-gray-900/80 text-white rounded-b-md">
         <h3 className="font-bold text-md md:text-lg truncate">{movie.title}</h3>

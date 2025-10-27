@@ -6,7 +6,8 @@ import {
     fetchTopRatedMovies,
     fetchMovieDetail,
     fetchMovieTrailer,
-    fetchMovieCast
+    fetchMovieCast,
+    fetchAllMovies
 } from "./createAction";
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
     movieDetail: { data: null, status: "idle", error: null },
     trailer: { data: [], status: "idle", error: null },
     cast: { data: [], status: "idle", error: null },
+    allMovies: { movies: [], status: "idle", error: null },
 };
 
 export const movieSlice = createSlice({
@@ -107,6 +109,18 @@ export const movieSlice = createSlice({
             .addCase(fetchMovieCast.rejected, (state, action) => {
                 state.cast.status = "Failed to load movie cast";
                 state.cast.error = action.payload;
+            });
+        builder
+            .addCase(fetchAllMovies.pending, (state) => {
+                state.allMovies.status = "Loading all movies...";
+            })
+            .addCase(fetchAllMovies.fulfilled, (state, action) => {
+                state.allMovies.movies = action.payload;
+                state.allMovies.status = "All movies loaded successfully";
+            })
+            .addCase(fetchAllMovies.rejected, (state, action) => {
+                state.allMovies.status = "Failed to load all movies";
+                state.allMovies.error = action.error.message;
             });
     },
 });

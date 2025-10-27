@@ -1,13 +1,8 @@
-import { useState, useEffect } from 'react';
 import { IMAGE_BASE_URL } from '../services/aip';
+import { useHeroActions } from '../hooks/useHeroActions';
 
 export function HeroSection({ heroMovie }) {
-  const [heroVisible, setHeroVisible] = useState(false);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setHeroVisible(true), 100);
-    return () => clearTimeout(timeout);
-  }, []);
+  const { isSubscribed, heroVisible, handleSubscribe, handleWatchNow } = useHeroActions();
 
   if (!heroMovie) return null;
 
@@ -17,8 +12,7 @@ export function HeroSection({ heroMovie }) {
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${IMAGE_BASE_URL}${heroMovie.backdrop_path})` }}
         role="img"
-        aria-label={`Background image for ${heroMovie.title}`}
-      />
+        aria-label={`Background image for ${heroMovie.title}`} />
       <div className="absolute inset-0 bg-black/60" />
 
       <header className={`z-10 px-8 md:px-16 lg:px-24 top-1/3 absolute transition-all duration-1000 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
@@ -29,11 +23,18 @@ export function HeroSection({ heroMovie }) {
           {heroMovie.overview.length > 250 ? heroMovie.overview.substring(0, 250) + "..." : heroMovie.overview}
         </p>
         <nav className="flex gap-4" aria-label="Hero movie actions">
-          <button className="bg-red-600 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition duration-300">
+          <button
+            onClick={handleWatchNow}
+            className="bg-red-600 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition duration-300">
             Watch Now
           </button>
-          <button className="bg-gray-100 text-black font-bold px-6 py-3 rounded-lg shadow-lg hover:bg-gray-200 transition duration-300">
-            Subscribe
+          <button
+            onClick={handleSubscribe}
+            className={`font-bold px-6 py-3 rounded-lg shadow-lg transition duration-300 ${isSubscribed
+              ? 'bg-green-600 text-white hover:bg-green-700'
+              : 'bg-gray-100 text-black hover:bg-gray-200'
+              }`}>
+            {isSubscribed ? 'Subscribed' : 'Subscribe'}
           </button>
         </nav>
       </header>

@@ -5,8 +5,10 @@ import { MovieDetail } from '../components/movieDetail/MovieDetail';
 import { useMoviesData } from '../hooks/useMoviesData';
 import { MovieSections } from '../components/MovieSections';
 import { HeroSection } from '../components/HeroSection';
+import { useNavigate } from 'react-router-dom';
 
 export function HomePage() {
+  const navigate = useNavigate();
   const { popular, upcoming, topRated, nowPlaying, isLoading, heroMovie } = useMoviesData();
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isMovieDetailOpen, setIsMovieDetailOpen] = useState(false);
@@ -19,6 +21,10 @@ export function HomePage() {
   const handleCloseMovieDetail = () => {
     setIsMovieDetailOpen(false);
     setSelectedMovie(null);
+  };
+
+  const handleViewMore = (category) => {
+    navigate(`/${category}`);
   };
 
   if (isLoading) {
@@ -34,8 +40,9 @@ export function HomePage() {
         upcoming={upcoming}
         topRated={topRated}
         nowPlaying={nowPlaying}
-        onMovieClick={handleMovieClick}/>
-      
+        onMovieClick={handleMovieClick}
+        onViewMore={handleViewMore}
+      />
       <MovieDetail
         movie={selectedMovie}
         isOpen={isMovieDetailOpen}

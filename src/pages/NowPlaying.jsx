@@ -1,11 +1,11 @@
-import { fetchPopularMovies } from "../redux/movies/createAction";
+import { fetchNowPlayingMovies } from "../redux/movies/createAction";
 import MovieCard from "../components/MovieCard";
 import { MovieDetail } from "../components/movieDetail/MovieDetail";
 import { MovieGridSkeleton } from "../components/LoadingSkeletons";
 import { useMovieCategory } from "../hooks/useMovieCategory";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 
-export function Popular() {
+export function NowPlaying() {
   const {
     movies,
     status,
@@ -16,8 +16,8 @@ export function Popular() {
     handleCloseDetail,
     handleRetry
   } = useMovieCategory(
-    (state) => state.movie.popular,
-    fetchPopularMovies
+    (state) => state.movie.nowPlaying,
+    fetchNowPlayingMovies
   );
 
   useScrollToTop();
@@ -50,13 +50,13 @@ export function Popular() {
           <div className="container mx-auto px-4">
             <header className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                Popular Movies
+                Now Playing
               </h1>
               <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-                Discover the most popular movies right now. Browse through trending films from The Movie Database.
+                Discover movies that are currently playing in theaters. Catch the latest releases while they're still on the big screen.
               </p>
               <div className="mt-4 text-gray-400">
-                <p>Showing {movies.length} popular movies</p>
+                <p>Showing {movies.length} movies now playing</p>
                 {status.includes("Loading") && (
                   <div className="inline-flex items-center mt-2 text-yellow-400">
                     <div className="w-4 h-4 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin mr-2"></div>
@@ -65,25 +65,26 @@ export function Popular() {
                 )}
               </div>
             </header>
-            <section aria-label="Popular movies list">
+
+            <section aria-label="Now playing movies list">
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 mb-8">
                 {movies.map((movie) => (
                   <MovieCard
                     key={movie.id}
                     movie={movie}
-                    onMovieClick={handleMovieClick}/>
+                    onMovieClick={handleMovieClick} />
                 ))}
               </div>
             </section>
           </div>
         </div>
       </main>
+
       {selectedMovie && (
         <MovieDetail
           movie={selectedMovie}
           isOpen={!!selectedMovie}
-          onClose={handleCloseDetail}
-        />
+          onClose={handleCloseDetail} />
       )}
     </>
   );

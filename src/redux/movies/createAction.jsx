@@ -45,6 +45,31 @@ export const fetchTopRatedMovies = createAsyncThunk("movies/fetchTopRated", asyn
     }
 });
 
+// Fetch All Movies - with multiple pages for more content
+export const fetchAllMovies = createAsyncThunk("movies/fetchAllMovies", async () => {
+    try {
+        // Fetch multiple pages to get more movies
+        const page1 = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&page=1&sort_by=popularity.desc`);
+        const page2 = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&page=2&sort_by=popularity.desc`);
+        const page3 = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&page=3&sort_by=popularity.desc`);
+        
+        const data1 = await page1.json();
+        const data2 = await page2.json();
+        const data3 = await page3.json();
+        
+        // Combine results from all pages
+        const allMovies = [
+            ...(data1.results || []),
+            ...(data2.results || []),
+            ...(data3.results || [])
+        ];
+        
+        return allMovies;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+});
+
 // Fetch Movie Detail by ID
 export const fetchMovieDetail = createAsyncThunk(
     "movies/fetchMovieDetail",

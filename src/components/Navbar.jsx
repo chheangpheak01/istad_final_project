@@ -2,8 +2,11 @@ import { useState } from 'react';
 import { NavLink, Link } from "react-router-dom";
 import logo from '../utilities/assets/logo.png';
 import { MagnifyingGlassIcon, Bars3Icon } from "@heroicons/react/24/solid";
+import { useScrollToTop } from '../hooks/useScrollToTop';
 
 export function Navbar() {
+
+    useScrollToTop();
 
     const [searchOpen, setSearchOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -24,6 +27,7 @@ export function Navbar() {
                 </section>
 
                 <ul className='hidden md:flex gap-x-4 items-center'>
+                    <li><NavLink to="/" className={navLinkStyle}>Home</NavLink></li>
                     <li><NavLink to="/popular" className={navLinkStyle}>Popular</NavLink></li>
                     <li><NavLink to="/upcoming" className={navLinkStyle}>Upcoming</NavLink></li>
                     <li><NavLink to="/top-rated" className={navLinkStyle}>Top Rated</NavLink></li>
@@ -62,9 +66,9 @@ export function Navbar() {
                     />
                 </form>
             )}
-
             {mobileMenuOpen && (
                 <ul className='flex flex-col gap-y-4 items-center bg-slate-700 p-4 md:hidden'>
+                    <li><NavLink to="/" className="block w-full text-center py-2 px-4 rounded hover:bg-sky-600 transition-colors duration-300">Home</NavLink></li>
                     <li><NavLink to="/popular" className="block w-full text-center py-2 px-4 rounded hover:bg-sky-600 transition-colors duration-300">Popular</NavLink></li>
                     <li><NavLink to="/upcoming" className="block w-full text-center py-2 px-4 rounded hover:bg-sky-600 transition-colors duration-300">Upcoming</NavLink></li>
                     <li><NavLink to="/top-rated" className="block w-full text-center py-2 px-4 rounded hover:bg-sky-600 transition-colors duration-300">Top Rated</NavLink></li>

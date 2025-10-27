@@ -8,11 +8,11 @@ import { MainLayout } from './components/Layout.jsx';
 import { Dashboard } from './pages/Dashboard.jsx';
 import { Popular } from './pages/Popular.jsx';
 import { Upcoming } from './pages/Upcoming.jsx';
-import { TopRelated } from './pages/TopRelated.jsx'
-import { NewPlaying } from './pages/NewPlaying.jsx';
-import { More } from './pages/More.jsx';
 import { SignIn } from './pages/SignIn.jsx';
 import { Provider } from "react-redux";
+import { TopRated } from './pages/TopRelated.jsx';
+import { NowPlaying } from './pages/NowPlaying.jsx';
+import { More } from './pages/More.jsx';
 
 const routing = createBrowserRouter([
   {
@@ -37,11 +37,11 @@ const routing = createBrowserRouter([
       },
       {
         path: "top-rated",
-        element: <TopRelated/>
+        element: <TopRated/>
       },
       {
         path: "now-playing",
-        element: <NewPlaying/>
+        element: <NowPlaying/>
       },
       {
         path: "more",
