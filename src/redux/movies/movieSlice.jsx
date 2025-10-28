@@ -7,7 +7,8 @@ import {
     fetchMovieDetail,
     fetchMovieTrailer,
     fetchMovieCast,
-    fetchAllMovies
+    searchMovies,
+    loadMoreMovies,
 } from "./createAction";
 
 const initialState = {
@@ -18,7 +19,15 @@ const initialState = {
     movieDetail: { data: null, status: "idle", error: null },
     trailer: { data: [], status: "idle", error: null },
     cast: { data: [], status: "idle", error: null },
-    allMovies: { movies: [], status: "idle", error: null },
+    searchResults: { movies: [], status: "idle", error: null },
+    loadMore: {
+        movies: [],
+        status: "idle",
+        error: null,
+        currentPage: 1,
+        totalPages: 0,
+        hasMore: true
+    }
 };
 
 export const movieSlice = createSlice({
@@ -111,16 +120,30 @@ export const movieSlice = createSlice({
                 state.cast.error = action.payload;
             });
         builder
-            .addCase(fetchAllMovies.pending, (state) => {
-                state.allMovies.status = "Loading all movies...";
+            .addCase(loadMoreMovies.pending, (state) => {
+                state.loadMore.status = "Load more movies is loading";
             })
-            .addCase(fetchAllMovies.fulfilled, (state, action) => {
-                state.allMovies.movies = action.payload;
-                state.allMovies.status = "All movies loaded successfully";
+            .addCase(loadMoreMovies.fulfilled, (state, action) => {
+                state.loadMore.movies = [...state.loadMore.movies, ...action.payload];
+                state.loadMore.currentPage += 1;
+                state.loadMore.hasMore = action.payload.length > 0;
+                state.loadMore.status = "Load more movies loaded successfully";
             })
-            .addCase(fetchAllMovies.rejected, (state, action) => {
-                state.allMovies.status = "Failed to load all movies";
-                state.allMovies.error = action.error.message;
+            .addCase(loadMoreMovies.rejected, (state, action) => {
+                state.loadMore.status = "Load more movies is failed";
+                state.loadMore.error = action.payload;
+            });
+        builder
+            .addCase(searchMovies.pending, (state) => {
+                state.searchResults.status = "loading";
+            })
+            .addCase(searchMovies.fulfilled, (state, action) => {
+                state.searchResults.movies = action.payload;
+                state.searchResults.status = "succeeded";
+            })
+            .addCase(searchMovies.rejected, (state, action) => {
+                state.searchResults.status = "failed";
+                state.searchResults.error = action.payload;
             });
     },
 });

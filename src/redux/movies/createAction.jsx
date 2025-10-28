@@ -45,28 +45,14 @@ export const fetchTopRatedMovies = createAsyncThunk("movies/fetchTopRated", asyn
     }
 });
 
-// Fetch All Movies - with multiple pages for more content
-export const fetchAllMovies = createAsyncThunk("movies/fetchAllMovies", async () => {
+// loadMoreMovies
+export const loadMoreMovies = createAsyncThunk("movies/loadMore", async (page = 1, { rejectWithValue }) => {
     try {
-        // Fetch multiple pages to get more movies
-        const page1 = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&page=1&sort_by=popularity.desc`);
-        const page2 = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&page=2&sort_by=popularity.desc`);
-        const page3 = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&page=3&sort_by=popularity.desc`);
-        
-        const data1 = await page1.json();
-        const data2 = await page2.json();
-        const data3 = await page3.json();
-        
-        // Combine results from all pages
-        const allMovies = [
-            ...(data1.results || []),
-            ...(data2.results || []),
-            ...(data3.results || [])
-        ];
-        
-        return allMovies;
+        const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
+        const data = await response.json();
+        return data.results;
     } catch (error) {
-        return Promise.reject(error);
+        return rejectWithValue(error.message);
     }
 });
 
@@ -99,9 +85,7 @@ export const fetchMovieTrailer = createAsyncThunk(
 );
 
 // Fetch Movie Cast by ID
-export const fetchMovieCast = createAsyncThunk(
-    "movies/fetchMovieCast",
-    async (movieId, { rejectWithValue }) => {
+export const fetchMovieCast = createAsyncThunk("movies/fetchMovieCast", async (movieId, { rejectWithValue }) => {
         try {
             const response = await fetch(`${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}&language=en-US`);
             const data = await response.json();
@@ -111,3 +95,16 @@ export const fetchMovieCast = createAsyncThunk(
         }
     }
 );
+
+// Search movies by title
+export const searchMovies = createAsyncThunk("/movies/searchMovies", async (title, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(title)}&page=1&include_adult=false`);
+      const data = await response.json();
+      return data.results || [];
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+

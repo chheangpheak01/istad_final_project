@@ -41,13 +41,11 @@ export function HomePage() {
         topRated={topRated}
         nowPlaying={nowPlaying}
         onMovieClick={handleMovieClick}
-        onViewMore={handleViewMore}
-      />
+        onViewMore={handleViewMore}/>
       <MovieDetail
         movie={selectedMovie}
         isOpen={isMovieDetailOpen}
-        onClose={handleCloseMovieDetail}
-      />
+        onClose={handleCloseMovieDetail}/>
     </main>
   );
 }

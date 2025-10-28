@@ -16,8 +16,7 @@ export function MovieSections({ popular, upcoming, topRated, nowPlaying, onMovie
             movies={popular.movies}
             visible={popularVisible}
             onMovieClick={onMovieClick}
-            onViewMore={() => onViewMore('popular')}
-          />
+            onViewMore={() => onViewMore('popular')}/>
         </div>
       )}
       {upcoming.movies.length > 0 && (
@@ -27,8 +26,7 @@ export function MovieSections({ popular, upcoming, topRated, nowPlaying, onMovie
             movies={upcoming.movies}
             visible={upcomingVisible}
             onMovieClick={onMovieClick}
-            onViewMore={() => onViewMore('upcoming')}
-          />
+            onViewMore={() => onViewMore('upcoming')}/>
         </div>
       )}
       {topRated.movies.length > 0 && (
@@ -38,8 +36,7 @@ export function MovieSections({ popular, upcoming, topRated, nowPlaying, onMovie
             movies={topRated.movies}
             visible={topRatedVisible}
             onMovieClick={onMovieClick}
-            onViewMore={() => onViewMore('top-rated')}
-          />
+            onViewMore={() => onViewMore('top-rated')}/>
         </div>
       )}
       {nowPlaying.movies.length > 0 && (
@@ -49,8 +46,7 @@ export function MovieSections({ popular, upcoming, topRated, nowPlaying, onMovie
             movies={nowPlaying.movies}
             visible={nowPlayingVisible}
             onMovieClick={onMovieClick}
-            onViewMore={() => onViewMore('now-playing')}
-          />
+            onViewMore={() => onViewMore('now-playing')}/>
         </div>
       )}
     </section>
