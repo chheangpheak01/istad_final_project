@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { MagnifyingGlassIcon, Bars3Icon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 
 export function NavActions({
     onToggleSearch,
     onToggleMobileMenu,
-    showMobileButton = true
+    showMobileButton = true,
+    isMobileMenuOpen = false
 }) {
     return (
         <section className='flex items-center gap-x-4 relative'>
@@ -21,7 +22,11 @@ export function NavActions({
             {showMobileButton && (
                 <div className="md:hidden">
                     <button onClick={onToggleMobileMenu}>
-                        <Bars3Icon className="w-6 h-6 text-white cursor-pointer" />
+                        {isMobileMenuOpen ? (
+                            <XMarkIcon className="w-6 h-6 text-white cursor-pointer hover:text-sky-400 transition-colors duration-300" />
+                        ) : (
+                            <Bars3Icon className="w-6 h-6 text-white cursor-pointer hover:text-sky-400 transition-colors duration-300" />
+                        )}
                     </button>
                 </div>
             )}

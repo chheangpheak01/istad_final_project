@@ -45,7 +45,8 @@ export function Navbar() {
                 <DesktopNav />
                 <NavActions
                     onToggleSearch={toggleSearch}
-                    onToggleMobileMenu={toggleMobileMenu} />
+                    onToggleMobileMenu={toggleMobileMenu}
+                    isMobileMenuOpen={mobileMenuOpen} />
             </nav>
 
             <SearchBar
