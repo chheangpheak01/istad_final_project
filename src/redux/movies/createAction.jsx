@@ -86,25 +86,24 @@ export const fetchMovieTrailer = createAsyncThunk(
 
 // Fetch Movie Cast by ID
 export const fetchMovieCast = createAsyncThunk("movies/fetchMovieCast", async (movieId, { rejectWithValue }) => {
-        try {
-            const response = await fetch(`${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}&language=en-US`);
-            const data = await response.json();
-            return data.cast;
-        } catch (error) {
-            return rejectWithValue(error.message);
-        }
+    try {
+        const response = await fetch(`${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}&language=en-US`);
+        const data = await response.json();
+        return data.cast;
+    } catch (error) {
+        return rejectWithValue(error.message);
     }
+}
 );
 
 // Search movies by title
 export const searchMovies = createAsyncThunk("/movies/searchMovies", async (title, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(title)}&page=1&include_adult=false`);
-      const data = await response.json();
-      return data.results || [];
+        const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(title)}&page=1&include_adult=false`);
+        const data = await response.json();
+        return data.results || [];
     } catch (error) {
-      return rejectWithValue(error.message);
+        return rejectWithValue(error.message);
     }
-  }
+}
 );
-

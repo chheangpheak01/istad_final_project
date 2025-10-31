@@ -8,7 +8,7 @@ import {
     fetchMovieTrailer,
     fetchMovieCast,
     searchMovies,
-    loadMoreMovies,
+    loadMoreMovies
 } from "./createAction";
 
 const initialState = {
@@ -144,7 +144,7 @@ export const movieSlice = createSlice({
             .addCase(searchMovies.rejected, (state, action) => {
                 state.searchResults.status = "failed";
                 state.searchResults.error = action.payload;
-            });
+            })
     },
 });
 

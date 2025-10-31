@@ -14,11 +14,12 @@ import { NowPlaying } from './pages/NowPlaying.jsx';
 import { More } from './pages/More.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Search } from './components/SearchResults.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 const routing = createBrowserRouter([
   {
     path: '/',
-    element: <MainLayout/>,
+    element: <MainLayout />,
     children: [
       {
         path: "/",
@@ -26,35 +27,39 @@ const routing = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <Dashboard/>
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        )
       },
       {
         path: "popular",
-        element: <Popular/>
+        element: <Popular />
       },
       {
         path: "upcoming",
-        element: <Upcoming/>
+        element: <Upcoming />
       },
       {
         path: "top-rated",
-        element: <TopRated/>
+        element: <TopRated />
       },
       {
         path: "now-playing",
-        element: <NowPlaying/>
+        element: <NowPlaying />
       },
       {
         path: "more",
-        element: <More/>
+        element: <More />
       },
       {
         path: "sign-in",
-        element: <SignIn/>
+        element: <SignIn />
       },
       {
         path: "/search",
-        element: <Search/>
+        element: <Search />
       }
     ]
   }
