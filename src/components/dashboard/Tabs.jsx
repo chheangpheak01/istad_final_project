@@ -14,7 +14,7 @@ export default function Tabs({ activeTab, setActiveTab, isSearching }) {
         } hover:shadow-md active:scale-95 flex items-center space-x-2`;
 
     return (
-        <div className="flex justify-center space-x-4 mb-6 flex-wrap gap-3">
+        <section className="flex justify-center space-x-4 mb-6 flex-wrap gap-3">
             {tabs.map((tab) => (
                 <button
                     key={tab.key}
@@ -27,6 +27,6 @@ export default function Tabs({ activeTab, setActiveTab, isSearching }) {
                     <span>{tab.label}</span>
                 </button>
             ))}
-        </div>
+        </section>
     );
 }

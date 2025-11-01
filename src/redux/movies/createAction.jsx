@@ -57,9 +57,7 @@ export const loadMoreMovies = createAsyncThunk("movies/loadMore", async (page = 
 });
 
 // Fetch Movie Detail by ID
-export const fetchMovieDetail = createAsyncThunk(
-    "movies/fetchMovieDetail",
-    async (movieId, { rejectWithValue }) => {
+export const fetchMovieDetail = createAsyncThunk("movies/fetchMovieDetail", async (movieId, { rejectWithValue }) => {
         try {
             const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US`);
             const data = await response.json();
@@ -71,9 +69,7 @@ export const fetchMovieDetail = createAsyncThunk(
 );
 
 // Fetch Movie Trailer by ID
-export const fetchMovieTrailer = createAsyncThunk(
-    "movies/fetchMovieTrailer",
-    async (movieId, { rejectWithValue }) => {
+export const fetchMovieTrailer = createAsyncThunk("movies/fetchMovieTrailer", async (movieId, { rejectWithValue }) => {
         try {
             const response = await fetch(`${BASE_URL}/movie/${movieId}/videos?api_key=${API_KEY}&language=en-US`);
             const data = await response.json();

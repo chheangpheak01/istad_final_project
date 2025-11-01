@@ -30,7 +30,7 @@ export default function MovieRow({ title, movies, visible, onMovieClick, onViewM
           <footer className="mt-4 flex justify-end">
             <button
               onClick={onViewMore}
-              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition cursor-pointer"
               aria-label={`View more ${title} movies`}>
               View More
             </button>

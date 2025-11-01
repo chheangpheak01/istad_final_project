@@ -1,7 +1,16 @@
 import DataTable from "react-data-table-component";
 import ActionButtons from "./ActionButtons";
 
-export default function MovieTable({ data, windowWidth, onWatch, onSave, onDelete, onOpenMovieDetail, isLoading }) {
+export default function MovieTable({
+    data,
+    windowWidth,
+    onWatch,
+    onSave,
+    onDelete,
+    onOpenMovieDetail,
+    isLoading,
+    emptyMessage = "🎬 No movies found for your search.",
+}) {
     const columns = [
         {
             name: "Poster",
@@ -50,7 +59,7 @@ export default function MovieTable({ data, windowWidth, onWatch, onSave, onDelet
     ];
 
     return (
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-amber-100">
+        <section className="bg-white rounded-2xl shadow-lg overflow-hidden border border-amber-100">
             <div className="overflow-x-auto">
                 {isLoading ? (
                     <div className="flex justify-center items-center py-10">
@@ -61,7 +70,7 @@ export default function MovieTable({ data, windowWidth, onWatch, onSave, onDelet
                     </div>
                 ) : data.length === 0 ? (
                     <div className="text-center py-10 text-gray-500 font-medium">
-                        🎬 No movies found for your search.
+                        {emptyMessage}
                     </div>
                 ) : (
                     <DataTable
@@ -74,6 +83,6 @@ export default function MovieTable({ data, windowWidth, onWatch, onSave, onDelet
                     />
                 )}
             </div>
-        </div>
+        </section>
     );
 }

@@ -18,7 +18,7 @@ export function SearchBar({
                     className="flex-1 rounded-md py-2 px-3 text-white bg-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-400 transition-all duration-300" />
                 <button
                     type="submit"
-                    className="bg-sky-600 text-white px-4 py-2 rounded-md hover:bg-sky-700 transition-colors duration-300">
+                    className="bg-sky-600 text-white px-4 py-2 rounded-md hover:bg-sky-700 transition-colors duration-300 cursor-pointer">
                     Search
                 </button>
             </div>

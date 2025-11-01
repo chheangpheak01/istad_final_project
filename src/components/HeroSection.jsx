@@ -25,12 +25,12 @@ export function HeroSection({ heroMovie }) {
         <nav className="flex gap-4" aria-label="Hero movie actions">
           <button
             onClick={handleWatchNow}
-            className="bg-red-600 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition duration-300">
+            className="bg-red-600 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition duration-300 cursor-pointer">
             Watch Now
           </button>
           <button
             onClick={handleSubscribe}
-            className={`font-bold px-6 py-3 rounded-lg shadow-lg transition duration-300 ${isSubscribed
+            className={`font-bold px-6 py-3 rounded-lg shadow-lg transition duration-300 cursor-pointer ${isSubscribed
               ? 'bg-green-600 text-white hover:bg-green-700'
               : 'bg-gray-100 text-black hover:bg-gray-200'
               }`}>

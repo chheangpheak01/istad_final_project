@@ -8,7 +8,7 @@ export function AuthForm({ formik, showPassword, setShowPassword, isLogin, isLoa
         <form onSubmit={handleSubmit} className="space-y-3">
 
             {!isLogin && (
-                <div>
+                <section>
                     <label className="block text-xs font-medium text-gray-200 mb-1">Full Name</label>
                     <div className="relative">
                         <UserIcon className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 transform -translate-y-1/2" />
@@ -21,10 +21,10 @@ export function AuthForm({ formik, showPassword, setShowPassword, isLogin, isLoa
                             placeholder="Your full name" />
                     </div>
                     {errors.name && touched.name && <p className="mt-1 text-xs text-red-400">{errors.name}</p>}
-                </div>
+                </section>
             )}
 
-            <div>
+            <section>
                 <label className="block text-xs font-medium text-gray-200 mb-1">Email</label>
                 <div className="relative">
                     <EnvelopeIcon className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 transform -translate-y-1/2" />
@@ -37,9 +37,9 @@ export function AuthForm({ formik, showPassword, setShowPassword, isLogin, isLoa
                         placeholder="you@example.com" />
                 </div>
                 {errors.email && touched.email && <p className="mt-1 text-xs text-red-400">{errors.email}</p>}
-            </div>
+            </section>
 
-            <div>
+            <section>
                 <label className="block text-xs font-medium text-gray-200 mb-1">Password</label>
                 <div className="relative">
                     <LockClosedIcon className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 transform -translate-y-1/2" />
@@ -53,17 +53,17 @@ export function AuthForm({ formik, showPassword, setShowPassword, isLogin, isLoa
                     <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white">
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white cursor-pointer">
                         {showPassword ? <EyeSlashIcon className="w-4 h-4" /> : <EyeIcon className="w-4 h-4" />}
                     </button>
                 </div>
                 {errors.password && touched.password && <p className="mt-1 text-xs text-red-400">{errors.password}</p>}
-            </div>
+            </section>
 
             <button
                 type="submit"
                 disabled={isLoading || !isValid}
-                className={`w-full py-2.5 rounded-lg font-medium text-white text-sm transition-all mt-4 ${isLoading || !isValid
+                className={`w-full py-2.5 rounded-lg font-medium text-white text-sm transition-all mt-4 cursor-pointer ${isLoading || !isValid
                     ? "bg-gray-600 cursor-not-allowed"
                     : "bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 shadow hover:shadow-pink-500/25"
                     }`}>
