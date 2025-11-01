@@ -8,7 +8,10 @@ import {
     fetchMovieTrailer,
     fetchMovieCast,
     searchMovies,
-    loadMoreMovies
+    loadMoreMovies,
+    createList,
+    fetchMovies,
+    deleteMovie
 } from "./createAction";
 
 const initialState = {
@@ -27,13 +30,23 @@ const initialState = {
         currentPage: 1,
         totalPages: 0,
         hasMore: true
-    }
+    },
+    myList: { listId: null, status: "idle", error: null },
+    moviesInList: { movies: [], status: "idle", error: null },
+    deletedMovies: [],
 };
 
 export const movieSlice = createSlice({
     name: "movie",
     initialState,
-    reducers: {},
+    reducers: {
+        removeMovieFromCategory: (state, action) => {
+            const { category, movieId } = action.payload;
+            if (state[category]?.movies) {
+                state[category].movies = state[category].movies.filter(m => m.id !== movieId);
+            }
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchPopularMovies.pending, (state) => {
@@ -145,7 +158,71 @@ export const movieSlice = createSlice({
                 state.searchResults.status = "failed";
                 state.searchResults.error = action.payload;
             })
+        builder
+            .addCase(createList.pending, (state) => {
+                state.myList.status = "Creating list...";
+            })
+            .addCase(createList.fulfilled, (state, action) => {
+                state.myList.listId = action.payload;
+                state.myList.status = "List created successfully";
+            })
+            .addCase(createList.rejected, (state, action) => {
+                state.myList.status = "Failed to create list";
+                state.myList.error = action.payload;
+            });
+        builder
+            .addCase(fetchMovies.pending, (state) => {
+                state.moviesInList.status = "Loading movies...";
+            })
+            .addCase(fetchMovies.fulfilled, (state, action) => {
+                state.moviesInList.movies = action.payload;
+                state.moviesInList.status = "Movies loaded successfully";
+            })
+            .addCase(fetchMovies.rejected, (state, action) => {
+                state.moviesInList.status = "Failed to load movies";
+                state.moviesInList.error = action.payload;
+            });
+        builder
+            .addCase(deleteMovie.pending, (state) => {
+                state.moviesInList.status = "Deleting movie...";
+            })
+            .addCase(deleteMovie.fulfilled, (state, action) => {
+                // Determine deleted movie ID
+                const deletedMovie = action.payload; // Can be full object or just ID
+                const deletedMovieId = deletedMovie.id || deletedMovie;
+
+                // List of categories to remove the movie from
+                const categories = [
+                    "moviesInList",
+                    "popular",
+                    "nowPlaying",
+                    "upcoming",
+                    "topRated",
+                    "searchResults",
+                    "loadMore"
+                ];
+
+                // Remove the deleted movie from all categories
+                categories.forEach(cat => {
+                    if (state[cat]?.movies) {
+                        state[cat].movies = state[cat].movies.filter(m => m.id !== deletedMovieId);
+                    }
+                });
+
+                // Add to deletedMovies only if it doesn't already exist
+                if (!state.deletedMovies.some(m => m.id === deletedMovieId)) {
+                    state.deletedMovies.push(deletedMovie.id ? deletedMovie : { id: deletedMovieId });
+                }
+
+                state.moviesInList.status = "Movie deleted successfully";
+            })
+
+            .addCase(deleteMovie.rejected, (state, action) => {
+                state.moviesInList.status = "Failed to delete movie";
+                state.moviesInList.error = action.payload;
+            });
     },
 });
 
 export default movieSlice.reducer;
+export const { removeMovieFromCategory } = movieSlice.actions;

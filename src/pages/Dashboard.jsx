@@ -7,31 +7,29 @@ import { useState } from "react";
 import { MovieDetail } from "../components/movieDetail/MovieDetail";
 
 export function Dashboard() {
-    const [selectedMovie, setSelectedMovie] = useState(null);
-    const [isMovieDetailOpen, setIsMovieDetailOpen] = useState(false);
-
     const {
         activeTab,
         setActiveTab,
         searchTerm,
         setSearchTerm,
-        isSearching,
         isLoading,
         savedVideos,
-        setSavedVideos,
         deletedVideos,
-        setDeletedVideos,
         watchedVideos,
+        setSavedVideos,
         setWatchedVideos,
         currentData,
         windowWidth,
-    } = useDashboardData();
+        handleDelete,
+        handleRewatch,
+    } = useDashboardData(); // removed setDeletedVideos to fix warning
+
+    const [selectedMovie, setSelectedMovie] = useState(null);
+    const [isMovieDetailOpen, setIsMovieDetailOpen] = useState(false);
 
     const handleSignOut = () => {
-        // Remove token & current user
         localStorage.removeItem("moviehubToken");
         localStorage.removeItem("currentUser");
-        // Redirect to SignIn page
         window.location.href = "/sign-in";
     };
 
@@ -43,6 +41,8 @@ export function Dashboard() {
                 return "🗑️ No deleted movies yet.";
             case "watched":
                 return "👀 You haven’t watched any movies yet.";
+            case "loadMore":
+                return "🎬 No more movies to load.";
             default:
                 return "🎬 No movies found for your search.";
         }
@@ -57,13 +57,7 @@ export function Dashboard() {
                     deletedVideos={deletedVideos}
                     watchedVideos={watchedVideos}
                     activeTab={activeTab}
-                    onStatClick={(stat) => {
-                        if (stat === "watched") setActiveTab("watched");
-                        else if (stat === "saved") setActiveTab("saved");
-                        else if (stat === "deleted") setActiveTab("deleted");
-                        else if (stat === "displayed") setActiveTab("popular");
-                        else alert(`Clicked ${stat}!`);
-                    }}
+                    onStatClick={setActiveTab}
                     onSignOut={handleSignOut}
                 />
             </aside>
@@ -77,10 +71,10 @@ export function Dashboard() {
                     </header>
 
                     <nav aria-label="Movie categories">
-                        <Tabs activeTab={activeTab} setActiveTab={setActiveTab} isSearching={isSearching} />
+                        <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
                     </nav>
 
-                    <section aria-label="Search movies">
+                    <section aria-label="Search movies" className="mb-6">
                         <SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
                     </section>
 
@@ -88,6 +82,7 @@ export function Dashboard() {
                         <MovieTable
                             data={currentData}
                             windowWidth={windowWidth}
+                            activeTab={activeTab}
                             onWatch={(row) => {
                                 setWatchedVideos((prev) => {
                                     if (prev.some((m) => m.id === row.id)) return prev;
@@ -102,18 +97,10 @@ export function Dashboard() {
                                     return [...prev, row];
                                 });
                             }}
-                            onDelete={(row) => {
-                                setDeletedVideos((prev) => {
-                                    if (prev.some((m) => m.id === row.id)) return prev;
-                                    return [...prev, row];
-                                });
-                            }}
-                            onOpenMovieDetail={(row) => {
-                                setSelectedMovie(row);
-                                setIsMovieDetailOpen(true);
-                            }}
+                            onDelete={handleDelete}
+                            onRewatch={handleRewatch}
                             isLoading={isLoading}
-                            emptyMessage={getEmptyMessage()} 
+                            emptyMessage={getEmptyMessage()}
                         />
                     </section>
 

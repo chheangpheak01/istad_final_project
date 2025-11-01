@@ -13,11 +13,9 @@ export default function Sidebar({
                 <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">Dashboard Info</h2>
 
                 <ul className="flex-1 flex flex-col justify-start space-y-4">
+                    {/* Displayed - Disabled */}
                     <li
-                        role="button"
-                        tabIndex={0}
-                        className="flex items-center justify-between bg-amber-100 rounded-2xl p-4 shadow cursor-pointer hover:bg-amber-200 transform hover:scale-105 transition-all duration-300"
-                        onClick={() => onStatClick("displayed")}
+                        className="flex items-center justify-between bg-amber-100 rounded-2xl p-4 shadow"
                     >
                         <span className="flex items-center space-x-3 text-gray-800 font-semibold text-lg">
                             <i className="fas fa-film text-amber-600 text-xl" aria-hidden="true"></i>
@@ -26,6 +24,7 @@ export default function Sidebar({
                         <span className="font-bold text-gray-900 text-lg">{currentDataLength}</span>
                     </li>
 
+                    {/* Saved */}
                     <li
                         role="button"
                         tabIndex={0}
@@ -39,6 +38,7 @@ export default function Sidebar({
                         <span className="font-bold text-gray-900 text-lg">{savedVideos.length}</span>
                     </li>
 
+                    {/* Deleted */}
                     <li
                         role="button"
                         tabIndex={0}
@@ -52,6 +52,7 @@ export default function Sidebar({
                         <span className="font-bold text-gray-900 text-lg">{deletedVideos.length}</span>
                     </li>
 
+                    {/* Watched */}
                     <li
                         role="button"
                         tabIndex={0}
@@ -65,17 +66,15 @@ export default function Sidebar({
                         <span className="font-bold text-gray-900 text-lg">{watchedVideos.length}</span>
                     </li>
 
+                    {/* Category - Disabled */}
                     <li
-                        role="button"
-                        tabIndex={0}
-                        className="flex items-center justify-between bg-gray-100 rounded-2xl p-4 shadow cursor-pointer hover:bg-gray-200 transform hover:scale-105 transition-all duration-300"
-                        onClick={() => onStatClick(`Category: ${activeTab}`)}
+                        className="flex items-center justify-between bg-gray-100 rounded-2xl p-4 shadow"
                     >
                         <span className="flex items-center space-x-3 text-gray-800 font-semibold text-lg">
                             <i className="fas fa-list text-gray-600 text-xl" aria-hidden="true"></i>
                             <span>Category</span>
                         </span>
-                        <span className="capitalize font-bold text-gray-900 text-lg">{activeTab}</span>
+                        <span className="capitalize font-bold text-lg text-blue-950">{activeTab}</span>
                     </li>
                 </ul>
 

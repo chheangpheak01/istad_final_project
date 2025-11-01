@@ -1,4 +1,4 @@
-import { IMAGE_BASE_URL } from "../../services/aip.jsx";
+import { IMAGE_BASE_URL } from "../../services/api.jsx";
 import { MovieDetailSkeleton } from "../LoadingSkeletons.jsx";
 import { MovieDetailHeader } from "./MovieDetailHeader.jsx";
 import { MovieDetailContent } from "./MovieDetailContent.jsx";

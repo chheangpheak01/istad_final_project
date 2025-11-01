@@ -1,5 +1,5 @@
 import { StarIcon } from "@heroicons/react/24/solid";
-import { IMAGE_BASE_URL } from "../services/aip";
+import { IMAGE_BASE_URL } from "../services/api";
 
 export default function MovieCard({ movie, onMovieClick }) {
   const handleClick = () => {

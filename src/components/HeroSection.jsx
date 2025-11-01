@@ -1,4 +1,4 @@
-import { IMAGE_BASE_URL } from '../services/aip';
+import { IMAGE_BASE_URL } from '../services/api';
 import { useHeroActions } from '../hooks/useHeroActions';
 
 export function HeroSection({ heroMovie }) {

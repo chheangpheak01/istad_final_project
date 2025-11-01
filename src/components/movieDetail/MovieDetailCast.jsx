@@ -1,5 +1,5 @@
 import { UserIcon } from "@heroicons/react/24/solid";
-import { IMAGE_BASE_URL } from "../../services/aip";
+import { IMAGE_BASE_URL } from "../../services/api";
 
 export function MovieDetailCast({ cast }) {
     return (
