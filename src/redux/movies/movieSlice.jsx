@@ -201,22 +201,18 @@ export const movieSlice = createSlice({
                     "searchResults",
                     "loadMore"
                 ];
-
                 // Remove the deleted movie from all categories
                 categories.forEach(cat => {
                     if (state[cat]?.movies) {
                         state[cat].movies = state[cat].movies.filter(m => m.id !== deletedMovieId);
                     }
                 });
-
                 // Add to deletedMovies only if it doesn't already exist
                 if (!state.deletedMovies.some(m => m.id === deletedMovieId)) {
                     state.deletedMovies.push(deletedMovie.id ? deletedMovie : { id: deletedMovieId });
                 }
-
                 state.moviesInList.status = "Movie deleted successfully";
             })
-
             .addCase(deleteMovie.rejected, (state, action) => {
                 state.moviesInList.status = "Failed to delete movie";
                 state.moviesInList.error = action.payload;

@@ -53,8 +53,9 @@ export default function MovieTable({
             : []),
         {
             name: "Action",
-            cell: (row) => (
+            cell: (row, index) => (
                 <ActionButtons
+                    key={`${row.id}-${index}`} // ensures ActionButtons are unique
                     row={row}
                     onWatch={onWatch}
                     onSave={onSave}
@@ -88,8 +89,8 @@ export default function MovieTable({
                             highlightOnHover
                             striped
                             className="w-full"
+                            keyField={(row, index) => `${row.id}-${index}`} // <-- unique key for each row
                         />
-                        {/* Show Load More button for "loadMore" tab */}
                         {activeTab === "loadMore" && onLoadMore && (
                             <div className="flex justify-center py-4">
                                 <button
