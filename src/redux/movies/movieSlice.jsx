@@ -49,7 +49,13 @@ export const movieSlice = createSlice({
         removeFromSearchResults: (state, action) => {
     const movieId = action.payload;
     state.searchResults.movies = (state.searchResults.movies || []).filter(m => m.id !== movieId);
-}
+},
+addMovieToCategory: (state, action) => {
+        const { category, movie } = action.payload;
+        if (!state[category]?.movies.some(m => m.id === movie.id)) {
+            state[category].movies.push(movie);
+        }
+    }
 
     },
     extraReducers: (builder) => {
@@ -226,4 +232,4 @@ export const movieSlice = createSlice({
 });
 
 export default movieSlice.reducer;
-export const { removeMovieFromCategory, removeFromSearchResults } = movieSlice.actions;
+export const { removeMovieFromCategory, removeFromSearchResults, addMovieToCategory } = movieSlice.actions;

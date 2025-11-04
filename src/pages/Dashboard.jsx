@@ -16,13 +16,14 @@ export function Dashboard() {
         savedVideos,
         deletedVideos,
         watchedVideos,
-        setSavedVideos,
-        setWatchedVideos,
         currentData,
         windowWidth,
         handleDelete,
         handleRewatch,
-    } = useDashboardData(); // removed setDeletedVideos to fix warning
+        handleSave,
+        handleRestore
+    } = useDashboardData(); // removed setSavedVideos and setWatchedVideos
+
 
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [isMovieDetailOpen, setIsMovieDetailOpen] = useState(false);
@@ -51,16 +52,16 @@ export function Dashboard() {
     return (
         <div className="min-h-screen w-screen bg-gradient-to-br from-amber-50 to-orange-50 mt-15 flex">
             <aside>
-    <Sidebar
-        currentDataLength={currentData.length}
-        savedVideos={savedVideos}
-        deletedVideos={deletedVideos}
-        watchedVideos={watchedVideos}
-        activeTab={activeTab}
-        onStatClick={(tab) => setActiveTab(tab)} // make sure sidebar clicks update activeTab
-        onSignOut={handleSignOut}
-    />
-</aside>
+                <Sidebar
+                    currentDataLength={currentData.length}
+                    savedVideos={savedVideos}
+                    deletedVideos={deletedVideos}
+                    watchedVideos={watchedVideos}
+                    activeTab={activeTab}
+                    onStatClick={(tab) => setActiveTab(tab)} // make sure sidebar clicks update activeTab
+                    onSignOut={handleSignOut}
+                />
+            </aside>
 
             <main className="flex-1 p-6">
                 <section className="w-full max-w-6xl mx-auto">
@@ -84,24 +85,19 @@ export function Dashboard() {
                             windowWidth={windowWidth}
                             activeTab={activeTab}
                             onWatch={(row) => {
-                                setWatchedVideos((prev) => {
-                                    if (prev.some((m) => m.id === row.id)) return prev;
-                                    return [...prev, row];
-                                });
-                                setSelectedMovie(row);
+                                handleRewatch(row);       // Adds movie to watchedVideos
+                                setSelectedMovie(row);    // Opens detail modal
                                 setIsMovieDetailOpen(true);
                             }}
-                            onSave={(row) => {
-                                setSavedVideos((prev) => {
-                                    if (prev.some((m) => m.id === row.id)) return prev;
-                                    return [...prev, row];
-                                });
-                            }}
-                            onDelete={handleDelete}
-                            onRewatch={handleRewatch}
+                            onSave={(row) => handleSave(row)}  // Adds movie to savedVideos & removes from current category
+                            onDelete={handleDelete}             // Deletes movie according to activeTab
+                            onRewatch={handleRewatch}           // For rewatching deleted movies
                             isLoading={isLoading}
+                            onRestore={handleRestore} 
                             emptyMessage={getEmptyMessage()}
                         />
+
+
                     </section>
 
                     {isMovieDetailOpen && selectedMovie && (

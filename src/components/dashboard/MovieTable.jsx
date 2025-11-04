@@ -33,39 +33,39 @@ export default function MovieTable({
         },
         ...(windowWidth >= 640
             ? [
-                  {
-                      name: "Title",
-                      selector: (row) => row.title,
-                      sortable: true,
-                      cell: (row) => <span className="font-semibold text-gray-800">{row.title}</span>,
-                  },
-              ]
+                {
+                    name: "Title",
+                    selector: (row) => row.title,
+                    sortable: true,
+                    cell: (row) => <span className="font-semibold text-gray-800">{row.title}</span>,
+                },
+            ]
             : []),
         ...(windowWidth >= 768
             ? [
-                  {
-                      name: "Release Date",
-                      selector: (row) => row.release_date,
-                      sortable: true,
-                      cell: (row) => <span className="text-gray-600">{row.release_date}</span>,
-                  },
-              ]
+                {
+                    name: "Release Date",
+                    selector: (row) => row.release_date,
+                    sortable: true,
+                    cell: (row) => <span className="text-gray-600">{row.release_date}</span>,
+                },
+            ]
             : []),
         {
-    name: "Action",
-    cell: (row, index) => (
-        <ActionButtons
-            key={`${row.id}-${index}`} // unique key for each ActionButtons instance
-            row={row}
-            onWatch={onWatch}
-            onSave={onSave}
-            onDelete={onDelete}
-            onRestore={onRestore}
-            onOpenMovieDetail={onOpenMovieDetail}
-            activeTab={activeTab} // pass current activeTab so buttons show correctly
-        />
-    ),
-}
+            name: "Action",
+            cell: (row, index) => (
+                <ActionButtons
+                    key={`${row.id}-${index}`} // unique key for each ActionButtons instance
+                    row={row}
+                    onWatch={onWatch}
+                    onSave={onSave}
+                    onDelete={onDelete}
+                    onRestore={onRestore}
+                    onOpenMovieDetail={onOpenMovieDetail}
+                    activeTab={activeTab} // pass current activeTab so buttons show correctly
+                />
+            ),
+        }
 
     ];
 
@@ -84,14 +84,14 @@ export default function MovieTable({
                 ) : (
                     <>
                         <DataTable
-    columns={columns}
-    data={data}
-    pagination
-    highlightOnHover
-    striped
-    className="w-full"
-    keyField={(row, index) => `${row.id}-${index}`} // unique key for each row
-/>
+                            columns={columns}
+                            data={data}
+                            pagination
+                            highlightOnHover
+                            striped
+                            className="w-full"
+                            keyField={(row, index) => `${row.id}-${index}`} // unique key for each row
+                        />
 
                         {activeTab === "loadMore" && onLoadMore && (
                             <div className="flex justify-center py-4">
