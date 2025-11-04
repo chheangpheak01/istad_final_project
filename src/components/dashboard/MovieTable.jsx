@@ -52,20 +52,21 @@ export default function MovieTable({
               ]
             : []),
         {
-            name: "Action",
-            cell: (row, index) => (
-                <ActionButtons
-                    key={`${row.id}-${index}`} // ensures ActionButtons are unique
-                    row={row}
-                    onWatch={onWatch}
-                    onSave={onSave}
-                    onDelete={onDelete}
-                    onRestore={onRestore}
-                    onOpenMovieDetail={onOpenMovieDetail}
-                    activeTab={activeTab}
-                />
-            ),
-        },
+    name: "Action",
+    cell: (row, index) => (
+        <ActionButtons
+            key={`${row.id}-${index}`} // unique key for each ActionButtons instance
+            row={row}
+            onWatch={onWatch}
+            onSave={onSave}
+            onDelete={onDelete}
+            onRestore={onRestore}
+            onOpenMovieDetail={onOpenMovieDetail}
+            activeTab={activeTab} // pass current activeTab so buttons show correctly
+        />
+    ),
+}
+
     ];
 
     return (
@@ -83,14 +84,15 @@ export default function MovieTable({
                 ) : (
                     <>
                         <DataTable
-                            columns={columns}
-                            data={data}
-                            pagination
-                            highlightOnHover
-                            striped
-                            className="w-full"
-                            keyField={(row, index) => `${row.id}-${index}`} // <-- unique key for each row
-                        />
+    columns={columns}
+    data={data}
+    pagination
+    highlightOnHover
+    striped
+    className="w-full"
+    keyField={(row, index) => `${row.id}-${index}`} // unique key for each row
+/>
+
                         {activeTab === "loadMore" && onLoadMore && (
                             <div className="flex justify-center py-4">
                                 <button

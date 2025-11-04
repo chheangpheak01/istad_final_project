@@ -51,16 +51,16 @@ export function Dashboard() {
     return (
         <div className="min-h-screen w-screen bg-gradient-to-br from-amber-50 to-orange-50 mt-15 flex">
             <aside>
-                <Sidebar
-                    currentDataLength={currentData.length}
-                    savedVideos={savedVideos}
-                    deletedVideos={deletedVideos}
-                    watchedVideos={watchedVideos}
-                    activeTab={activeTab}
-                    onStatClick={setActiveTab}
-                    onSignOut={handleSignOut}
-                />
-            </aside>
+    <Sidebar
+        currentDataLength={currentData.length}
+        savedVideos={savedVideos}
+        deletedVideos={deletedVideos}
+        watchedVideos={watchedVideos}
+        activeTab={activeTab}
+        onStatClick={(tab) => setActiveTab(tab)} // make sure sidebar clicks update activeTab
+        onSignOut={handleSignOut}
+    />
+</aside>
 
             <main className="flex-1 p-6">
                 <section className="w-full max-w-6xl mx-auto">

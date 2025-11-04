@@ -9,7 +9,7 @@ import {
     searchMovies,
     deleteMovie,
 } from "../redux/movies/createAction";
-import { removeMovieFromCategory } from "../redux/movies/MovieSlice";
+import { removeFromSearchResults, removeMovieFromCategory } from "../redux/movies/MovieSlice";
 
 export function useDashboardData() {
     const { popular, nowPlaying, upcoming, topRated, loadMore, searchResults, moviesInList } = useSelector(
@@ -57,35 +57,43 @@ export function useDashboardData() {
         } else setIsSearching(false);
     }, [searchTerm, dispatch]);
 
-    // Delete movie
-    const handleDelete = (movie) => {
-        const { id } = movie;
-        switch (activeTab) {
-            case "myList":
-                if (!moviesInList?.listId) return;
-                dispatch(deleteMovie({ movieId: id, listId: moviesInList.listId }))
-                    .unwrap()
-                    .then(() => setDeletedVideos((prev) => [...prev, movie]))
-                    .catch((err) => console.error(err));
-                break;
-            case "popular":
-            case "upcoming":
-            case "nowPlaying":
-            case "topRated":
-            case "loadMore":
-                dispatch(removeMovieFromCategory({ category: activeTab, movieId: id }));
-                setDeletedVideos((prev) => [...prev, movie]);
-                break;
-            case "saved":
-                setSavedVideos((prev) => prev.filter((m) => m.id !== id));
-                setDeletedVideos((prev) => [...prev, movie]);
-                break;
-            case "watched":
-                setWatchedVideos((prev) => prev.filter((m) => m.id !== id));
-                setDeletedVideos((prev) => [...prev, movie]);
-                break;
-        }
-    };
+// Delete movie
+const handleDelete = (movie) => {
+    const { id } = movie;
+
+    // Remove movie from search results immediately if searching
+    if (searchTerm.trim()) {
+    dispatch(removeFromSearchResults(id));
+}
+
+
+    switch (activeTab) {
+        case "myList":
+            if (!moviesInList?.listId) return;
+            dispatch(deleteMovie({ movieId: id, listId: moviesInList.listId }))
+                .unwrap()
+                .then(() => setDeletedVideos((prev) => [...prev, movie]))
+                .catch((err) => console.error(err));
+            break;
+        case "popular":
+        case "upcoming":
+        case "nowPlaying":
+        case "topRated":
+        case "loadMore":
+            dispatch(removeMovieFromCategory({ category: activeTab, movieId: id }));
+            setDeletedVideos((prev) => [...prev, movie]);
+            break;
+        case "saved":
+            setSavedVideos((prev) => prev.filter((m) => m.id !== id));
+            setDeletedVideos((prev) => [...prev, movie]);
+            break;
+        case "watched":
+            setWatchedVideos((prev) => prev.filter((m) => m.id !== id));
+            setDeletedVideos((prev) => [...prev, movie]);
+            break;
+    }
+};
+
 
     // Rewatch movie from deleted → watched
     const handleRewatch = (movie) => {
