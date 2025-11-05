@@ -7,16 +7,15 @@ export default function ActionButtons({
     onOpenMovieDetail,
     activeTab,
 }) {
+
     const buttonsToShow = [];
 
     if (activeTab === "saved") {
-
         buttonsToShow.push(
             {
                 label: "Watch",
                 onClick: () => {
                     onWatch?.(row);
-                    onDelete?.(row);
                     onOpenMovieDetail?.(row);
                 },
                 bg: "bg-green-600",
@@ -57,8 +56,7 @@ export default function ActionButtons({
                         <button
                             type="button"
                             className={`${btn.bg} text-white px-4 py-2 rounded-md hover:opacity-90 transition-all duration-300 cursor-pointer flex items-center space-x-1`}
-                            onClick={btn.onClick}
-                        >
+                            onClick={btn.onClick}>
                             <i className={`fas ${btn.icon}`} aria-hidden="true"></i>
                             <span>{btn.label}</span>
                         </button>

@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { removeFromSearchResults, removeMovieFromCategory } from "../redux/movies/MovieSlice";
 import {
     fetchPopularMovies,
     fetchNowPlayingMovies,
     fetchUpcomingMovies,
     fetchTopRatedMovies,
     loadMoreMovies,
-    deleteMovie,
+    //deleteMovie,
     addMovieToList,
 } from "../redux/movies/createAction";
-import { removeFromSearchResults, removeMovieFromCategory } from "../redux/movies/MovieSlice";
 
 export function useDashboardData() {
     const { popular, nowPlaying, upcoming, topRated, loadMore, moviesInList } = useSelector(
@@ -27,6 +27,21 @@ export function useDashboardData() {
     const [deletedVideos, setDeletedVideos] = useState(() => JSON.parse(localStorage.getItem("deletedVideos")) || []);
     const [watchedVideos, setWatchedVideos] = useState(() => JSON.parse(localStorage.getItem("watchedVideos")) || []);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    // Helper to ensure exclusivity across saved, deleted, watched
+    const addToCategory = (movie, category) => {
+        const id = movie.id;
+
+        // Remove from all categories first
+        setSavedVideos(prev => prev.filter(m => m.id !== id));
+        setDeletedVideos(prev => prev.filter(m => m.id !== id));
+        setWatchedVideos(prev => prev.filter(m => m.id !== id));
+
+        // Add to the target category
+        if (category === "saved") setSavedVideos(prev => [...prev, movie]);
+        if (category === "deleted") setDeletedVideos(prev => [...prev, movie]);
+        if (category === "watched") setWatchedVideos(prev => [...prev, movie]);
+    };
 
     // Persist localStorage
     useEffect(() => localStorage.setItem("savedVideos", JSON.stringify(savedVideos)), [savedVideos]);
@@ -76,11 +91,7 @@ export function useDashboardData() {
 
         const filtered = sourceData.filter(m => {
             const matchesTitle = m.title?.toLowerCase().includes(searchTerm.toLowerCase());
-
-            // For sidebar categories, do not exclude any videos
             if (["saved", "watched", "deleted"].includes(activeTab)) return matchesTitle;
-
-            // For main categories, exclude saved/deleted/watched
             return matchesTitle &&
                 !deletedVideos.some(d => d.id === m.id) &&
                 !savedVideos.some(s => s.id === m.id) &&
@@ -103,86 +114,44 @@ export function useDashboardData() {
         loadMore
     ]);
 
-    // Delete movie
     const handleDelete = (movie) => {
         const { id } = movie;
         const movieWithCategory = { ...movie, originalCategory: activeTab };
-
         if (searchTerm.trim()) dispatch(removeFromSearchResults(id));
-
-        switch (activeTab) {
-            case "myList":
-                if (!moviesInList?.listId) return;
-                dispatch(deleteMovie({ movieId: id, listId: moviesInList.listId }))
-                    .unwrap()
-                    .then(() => setDeletedVideos(prev => [...prev, movieWithCategory]))
-                    .catch(err => console.error(err));
-                break;
-            case "popular":
-            case "upcoming":
-            case "nowPlaying":
-            case "topRated":
-            case "loadMore":
-                dispatch(removeMovieFromCategory({ category: activeTab, movieId: id }));
-                setDeletedVideos(prev => [...prev, movieWithCategory]);
-                break;
-            case "saved":
-                setSavedVideos(prev => prev.filter(m => m.id !== id));
-                setDeletedVideos(prev => [...prev, movieWithCategory]);
-                break;
-            case "watched":
-                setWatchedVideos(prev => prev.filter(m => m.id !== id));
-                setDeletedVideos(prev => [...prev, movieWithCategory]);
-                break;
-        }
+        addToCategory(movieWithCategory, "deleted");
+        const categories = ["popular", "upcoming", "nowPlaying", "topRated", "loadMore", "myList"];
+        categories.forEach(cat => dispatch(removeMovieFromCategory({ category: cat, movieId: id })));
     };
 
     const handleRestore = (movie) => {
         const { id, originalCategory } = movie;
         setDeletedVideos(prev => prev.filter(m => m.id !== id));
-
-        if (originalCategory === "saved") setSavedVideos(prev => [...prev, movie]);
-        else if (originalCategory === "watched") setWatchedVideos(prev => [...prev, movie]);
-
-        if (originalCategory === "myList" && moviesInList?.listId) {
+        if (originalCategory === "saved") addToCategory(movie, "saved");
+        else if (originalCategory === "watched") addToCategory(movie, "watched");
+        else if (originalCategory === "myList" && moviesInList?.listId) {
             dispatch(addMovieToList({ movieId: id, listId: moviesInList.listId }));
         }
     };
 
     const handleSave = (movie) => {
         const { id } = movie;
-
-        if (!savedVideos.some(m => m.id === id)) setSavedVideos(prev => [...prev, movie]);
+        addToCategory(movie, "saved");
         dispatch(removeFromSearchResults(id));
-
-        const categories = ["popular", "upcoming", "nowPlaying", "topRated", "loadMore", "watched", "deleted", "myList"];
-        categories.forEach(cat => {
-            if (["watched", "deleted"].includes(cat)) {
-                if (cat === "watched") setWatchedVideos(prev => prev.filter(m => m.id !== id));
-                if (cat === "deleted") setDeletedVideos(prev => prev.filter(m => m.id !== id));
-            } else {
-                dispatch(removeMovieFromCategory({ category: cat, movieId: id }));
-            }
-        });
+        const categories = ["popular", "upcoming", "nowPlaying", "topRated", "loadMore", "myList"];
+        categories.forEach(cat => dispatch(removeMovieFromCategory({ category: cat, movieId: id })));
     };
 
     const handleRewatch = (movie) => {
-        setDeletedVideos(prev => prev.filter(m => m.id !== movie.id));
-        setWatchedVideos(prev => [...prev, movie]);
+        addToCategory(movie, "watched");
     };
 
     const handleWatch = (movie) => {
         const { id } = movie;
-
-        setSavedVideos(prev => prev.filter(m => m.id !== id));
-        if (activeTab === "saved") setSavedVideos(prev => [...prev]); // re-render
-        setWatchedVideos(prev => prev.some(m => m.id === id) ? prev : [...prev, movie]);
-        setDeletedVideos(prev => prev.filter(m => m.id !== id));
-
+        addToCategory(movie, "watched");
         const categories = ["popular", "upcoming", "nowPlaying", "topRated", "loadMore"];
         categories.forEach(cat => dispatch(removeMovieFromCategory({ category: cat, movieId: id })));
-
         if (searchTerm.trim()) dispatch(removeFromSearchResults(id));
+        if (activeTab === "saved") setActiveTab("watched");
     };
 
     // Get current data to display
@@ -197,14 +166,13 @@ export function useDashboardData() {
                 case "upcoming": data = upcoming.movies || []; break;
                 case "nowPlaying": data = nowPlaying.movies || []; break;
                 case "topRated": data = topRated.movies || []; break;
-                case "saved": data = savedVideos; break;
-                case "watched": data = watchedVideos; break;
-                case "deleted": data = deletedVideos; break;
+                case "saved": data = Array.from(new Map(savedVideos.map(m => [m.id, m])).values()); break;
+                case "watched": data = Array.from(new Map(watchedVideos.map(m => [m.id, m])).values()); break;
+                case "deleted": data = Array.from(new Map(deletedVideos.map(m => [m.id, m])).values()); break;
                 case "myList": data = moviesInList.movies || []; break;
                 case "loadMore": data = loadMore.movies || []; break;
                 default: data = [];
             }
-
             if (!["deleted", "saved", "watched"].includes(activeTab)) {
                 data = data.filter(
                     m => !deletedVideos.some(d => d.id === m.id) &&

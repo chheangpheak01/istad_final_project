@@ -55,14 +55,14 @@ export default function MovieTable({
             name: "Action",
             cell: (row, index) => (
                 <ActionButtons
-                    key={`${row.id}-${index}`} // unique key for each ActionButtons instance
+                    key={`${row.id}-${index}`}
                     row={row}
                     onWatch={onWatch}
                     onSave={onSave}
                     onDelete={onDelete}
                     onRestore={onRestore}
                     onOpenMovieDetail={onOpenMovieDetail}
-                    activeTab={activeTab} // pass current activeTab so buttons show correctly
+                    activeTab={activeTab}
                 />
             ),
         }
@@ -101,8 +101,7 @@ export default function MovieTable({
                             <div className="flex justify-center py-4">
                                 <button
                                     className="bg-amber-500 text-white px-6 py-2 rounded-md hover:bg-amber-600 transition-all duration-300"
-                                    onClick={onLoadMore}
-                                >
+                                    onClick={onLoadMore}>
                                     Load More
                                 </button>
                             </div>
