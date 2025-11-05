@@ -22,7 +22,7 @@ export function Dashboard() {
         handleRewatch,
         handleSave,
         handleRestore
-    } = useDashboardData(); // removed setSavedVideos and setWatchedVideos
+    } = useDashboardData();
 
 
     const [selectedMovie, setSelectedMovie] = useState(null);
@@ -58,7 +58,7 @@ export function Dashboard() {
                     deletedVideos={deletedVideos}
                     watchedVideos={watchedVideos}
                     activeTab={activeTab}
-                    onStatClick={(tab) => setActiveTab(tab)} // make sure sidebar clicks update activeTab
+                    onStatClick={(tab) => setActiveTab(tab)}
                     onSignOut={handleSignOut}
                 />
             </aside>
@@ -85,19 +85,17 @@ export function Dashboard() {
                             windowWidth={windowWidth}
                             activeTab={activeTab}
                             onWatch={(row) => {
-                                handleRewatch(row);       // Adds movie to watchedVideos
-                                setSelectedMovie(row);    // Opens detail modal
+                                handleRewatch(row);
+                                setSelectedMovie(row);
                                 setIsMovieDetailOpen(true);
                             }}
-                            onSave={(row) => handleSave(row)}  // Adds movie to savedVideos & removes from current category
-                            onDelete={handleDelete}             // Deletes movie according to activeTab
-                            onRewatch={handleRewatch}           // For rewatching deleted movies
+                            onSave={(row) => handleSave(row)}
+                            onDelete={handleDelete}
+                            onRewatch={handleRewatch}
                             isLoading={isLoading}
-                            onRestore={handleRestore} 
+                            onRestore={handleRestore}
                             emptyMessage={getEmptyMessage()}
                         />
-
-
                     </section>
 
                     {isMovieDetailOpen && selectedMovie && (

@@ -47,16 +47,15 @@ export const movieSlice = createSlice({
             }
         },
         removeFromSearchResults: (state, action) => {
-    const movieId = action.payload;
-    state.searchResults.movies = (state.searchResults.movies || []).filter(m => m.id !== movieId);
-},
-addMovieToCategory: (state, action) => {
-        const { category, movie } = action.payload;
-        if (!state[category]?.movies.some(m => m.id === movie.id)) {
-            state[category].movies.push(movie);
+            const movieId = action.payload;
+            state.searchResults.movies = (state.searchResults.movies || []).filter(m => m.id !== movieId);
+        },
+        addMovieToCategory: (state, action) => {
+            const { category, movie } = action.payload;
+            if (!state[category]?.movies.some(m => m.id === movie.id)) {
+                state[category].movies.push(movie);
+            }
         }
-    }
-
     },
     extraReducers: (builder) => {
         builder
@@ -198,10 +197,8 @@ addMovieToCategory: (state, action) => {
                 state.moviesInList.status = "Deleting movie...";
             })
             .addCase(deleteMovie.fulfilled, (state, action) => {
-                // Determine deleted movie ID
-                const deletedMovie = action.payload; // Can be full object or just ID
+                const deletedMovie = action.payload;
                 const deletedMovieId = deletedMovie.id || deletedMovie;
-
                 // List of categories to remove the movie from
                 const categories = [
                     "moviesInList",

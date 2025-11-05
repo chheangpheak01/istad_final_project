@@ -208,8 +208,8 @@ export function useDashboardData() {
             if (!["deleted", "saved", "watched"].includes(activeTab)) {
                 data = data.filter(
                     m => !deletedVideos.some(d => d.id === m.id) &&
-                         !savedVideos.some(s => s.id === m.id) &&
-                         !watchedVideos.some(w => w.id === m.id)
+                        !savedVideos.some(s => s.id === m.id) &&
+                        !watchedVideos.some(w => w.id === m.id)
                 );
             }
         }

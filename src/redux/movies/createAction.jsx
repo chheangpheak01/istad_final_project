@@ -168,26 +168,26 @@ export const deleteMovie = createAsyncThunk("movies/deleteMovie", async ({ movie
     }
 });
 
-export const addMovieToList = createAsyncThunk("movies/addMovieToList",async ({ movieId, listId }, { rejectWithValue }) => {
+export const addMovieToList = createAsyncThunk("movies/addMovieToList", async ({ movieId, listId }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${BASE_URL}/list/${listId}/add_item`,
-        { media_id: movieId },
-        {
-          params: { api_key: API_KEY, session_id: SESSION_ID },
-          headers: { "Content-Type": "application/json" }
+        const response = await axios.post(
+            `${BASE_URL}/list/${listId}/add_item`,
+            { media_id: movieId },
+            {
+                params: { api_key: API_KEY, session_id: SESSION_ID },
+                headers: { "Content-Type": "application/json" }
+            }
+        );
+
+        const data = response.data;
+
+        if (data.success) {
+            return movieId; // return restored movie ID
+        } else {
+            return rejectWithValue(data.status_message);
         }
-      );
-
-      const data = response.data;
-
-      if (data.success) {
-        return movieId; // return restored movie ID
-      } else {
-        return rejectWithValue(data.status_message);
-      }
     } catch (error) {
-      return rejectWithValue(error.response?.data?.status_message || error.message);
+        return rejectWithValue(error.response?.data?.status_message || error.message);
     }
-  }
+}
 );

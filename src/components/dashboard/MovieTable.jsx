@@ -11,7 +11,7 @@ export default function MovieTable({
     onOpenMovieDetail,
     isLoading,
     activeTab,
-    onLoadMore, // function to load more movies
+    onLoadMore,
     emptyMessage = "🎬 No movies found for your search.",
 }) {
     const columns = [
@@ -66,21 +66,25 @@ export default function MovieTable({
                 />
             ),
         }
-
     ];
 
     return (
-        <section className="bg-white rounded-2xl shadow-lg overflow-hidden border border-amber-100">
+        <section
+            className="bg-white rounded-2xl shadow-lg overflow-hidden border border-amber-100"
+            aria-label="Movies Table"
+        >
             <div className="overflow-x-auto">
                 {isLoading ? (
-                    <div className="flex justify-center items-center py-10">
+                    <header className="flex justify-center items-center py-10" aria-live="polite">
                         <div className="flex items-center space-x-3 text-amber-600">
-                            <span className="loader border-4 border-amber-200 border-t-amber-600 rounded-full w-8 h-8 animate-spin"></span>
+                            <span className="loader border-4 border-amber-200 border-t-amber-600 rounded-full w-8 h-8 animate-spin" aria-hidden="true"></span>
                             <span className="font-medium text-lg">Loading movies...</span>
                         </div>
-                    </div>
+                    </header>
                 ) : data.length === 0 ? (
-                    <div className="text-center py-10 text-gray-500 font-medium">{emptyMessage}</div>
+                    <header className="text-center py-10 text-gray-500 font-medium" aria-live="polite">
+                        {emptyMessage}
+                    </header>
                 ) : (
                     <>
                         <DataTable
