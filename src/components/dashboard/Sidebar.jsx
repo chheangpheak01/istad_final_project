@@ -100,7 +100,8 @@ export default function Sidebar({
 }) {
     return (
         <aside
-            className="w-full sm:w-80 bg-white shadow-lg rounded-r-2xl flex flex-col justify-between p-4 sm:p-6 overflow-y-auto"
+            className="w-full sm:w-80 bg-white shadow-lg rounded-b-2xl sm:rounded-r-2xl flex flex-col justify-between 
+                       p-4 sm:p-6 overflow-y-auto mt-16 sm:mt-0 z-10 relative"
             aria-label="Sidebar with dashboard stats"
         >
             <div className="space-y-6 flex flex-col h-full">
@@ -121,7 +122,7 @@ export default function Sidebar({
                         <button
                             type="button"
                             className="w-full flex items-center justify-between bg-blue-100 rounded-2xl p-3 sm:p-4 shadow hover:bg-blue-200 transform hover:scale-105 transition-all duration-300"
-                            onClick={() => onStatClick("saved")}
+                            onClick={() => onStatClick('saved')}
                         >
                             <span className="flex items-center space-x-2 sm:space-x-3 text-gray-800 font-semibold text-base sm:text-lg">
                                 <i className="fas fa-bookmark text-blue-600 text-lg sm:text-xl" aria-hidden="true"></i>
@@ -135,7 +136,7 @@ export default function Sidebar({
                         <button
                             type="button"
                             className="w-full flex items-center justify-between bg-red-100 rounded-2xl p-3 sm:p-4 shadow hover:bg-red-200 transform hover:scale-105 transition-all duration-300"
-                            onClick={() => onStatClick("deleted")}
+                            onClick={() => onStatClick('deleted')}
                         >
                             <span className="flex items-center space-x-2 sm:space-x-3 text-gray-800 font-semibold text-base sm:text-lg">
                                 <i className="fas fa-trash text-red-600 text-lg sm:text-xl" aria-hidden="true"></i>
@@ -149,7 +150,7 @@ export default function Sidebar({
                         <button
                             type="button"
                             className="w-full flex items-center justify-between bg-green-100 rounded-2xl p-3 sm:p-4 shadow hover:bg-green-200 transform hover:scale-105 transition-all duration-300"
-                            onClick={() => onStatClick("watched")}
+                            onClick={() => onStatClick('watched')}
                         >
                             <span className="flex items-center space-x-2 sm:space-x-3 text-gray-800 font-semibold text-base sm:text-lg">
                                 <i className="fas fa-play text-green-600 text-lg sm:text-xl" aria-hidden="true"></i>
