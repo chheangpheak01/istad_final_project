@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromSearchResults, removeMovieFromCategory } from "../redux/movies/MovieSlice";
+import { removeFromSearchResults, removeMovieFromCategory } from "../redux/movies/movieSlice";
 import {
     fetchPopularMovies,
     fetchNowPlayingMovies,
