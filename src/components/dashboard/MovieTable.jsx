@@ -33,29 +33,29 @@ export default function MovieTable({
     },
     ...(windowWidth >= 640
       ? [
-          {
-            name: "Title",
-            selector: (row) => row.title,
-            sortable: true,
-            cell: (row) => (
-              <span className="font-semibold text-gray-800 text-sm sm:text-base">
-                {row.title}
-              </span>
-            ),
-          },
-        ]
+        {
+          name: "Title",
+          selector: (row) => row.title,
+          sortable: true,
+          cell: (row) => (
+            <span className="font-semibold text-gray-800 text-sm sm:text-base">
+              {row.title}
+            </span>
+          ),
+        },
+      ]
       : []),
     ...(windowWidth >= 768
       ? [
-          {
-            name: "Release Date",
-            selector: (row) => row.release_date,
-            sortable: true,
-            cell: (row) => (
-              <span className="text-gray-600 text-xs sm:text-sm">{row.release_date}</span>
-            ),
-          },
-        ]
+        {
+          name: "Release Date",
+          selector: (row) => row.release_date,
+          sortable: true,
+          cell: (row) => (
+            <span className="text-gray-600 text-xs sm:text-sm">{row.release_date}</span>
+          ),
+        },
+      ]
       : []),
     {
       name: "Action",
