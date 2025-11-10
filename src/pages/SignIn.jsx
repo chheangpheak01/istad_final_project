@@ -6,18 +6,28 @@ import { useAuthForm } from "../hooks/useAuthForm";
 
 export function SignIn() {
   const navigate = useNavigate();
-  const { formik, isLogin, setIsLogin, showPassword, setShowPassword, isLoading } = useAuthForm(navigate);
+  const { formik, isLogin, setIsLogin, showPassword, setShowPassword, isLoading } =
+    useAuthForm(navigate);
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-800 z-0 flex flex-col">
-      <div className="flex-1 flex items-center justify-center overflow-auto p-4">
+    <div className="relative w-full min-h-[100%] bg-gradient-to-br from-blue-900 via-purple-900 to-pink-800 flex flex-col">
+      {/* Scrollable wrapper to prevent stretching when keyboard opens */}
+      <div className="flex flex-col items-center p-4 w-full overflow-auto">
         <div className="w-full max-w-md sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl px-2">
+          {/* Card container */}
           <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 p-6 sm:p-8 md:p-10 max-h-[90vh] overflow-auto">
+            {/* Header */}
             <AuthHeader isLogin={isLogin} />
+
+            {/* Toggle */}
             <AuthToggle isLogin={isLogin} setIsLogin={setIsLogin} />
+
+            {/* Sub-header */}
             <h3 className="text-white font-semibold text-sm sm:text-base mb-3 text-center">
               {isLogin ? "Log in to MovieHub" : "Create Your MovieHub Account"}
             </h3>
+
+            {/* Form */}
             <AuthForm
               formik={formik}
               showPassword={showPassword}
@@ -25,6 +35,8 @@ export function SignIn() {
               isLogin={isLogin}
               isLoading={isLoading}
             />
+
+            {/* Bottom text */}
             <div className="mt-4 text-center">
               <p className="text-xs sm:text-sm text-gray-400">
                 {isLogin ? "Don't have an account?" : "Already a member?"}{" "}
