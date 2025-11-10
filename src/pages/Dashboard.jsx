@@ -27,8 +27,7 @@ export function Dashboard() {
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [isMovieDetailOpen, setIsMovieDetailOpen] = useState(false);
 
-    
-    const dashboardRef = useRef(null); 
+    const dashboardRef = useRef(null);
 
     useEffect(() => {
         if (dashboardRef.current) {
@@ -70,12 +69,13 @@ export function Dashboard() {
                     onSignOut={handleSignOut}
                 />
             </aside>
-            <main 
-             ref={dashboardRef}
-            className="flex-1 p-4 sm:p-6 pt-24 sm:pt-20 md:pt-6">
+            <main
+                ref={dashboardRef}
+                className="flex-1 p-4 sm:p-6 pt-8 sm:pt-12 md:pt-16 lg:pt-20"
+            >
                 <section className="w-full max-w-6xl mx-auto">
                     <header className="text-center mb-6 sm:mb-8">
-                        <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent mb-2 mt-15">
+                        <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent mb-2 mt-0 sm:mt-2">
                             Istad Movie
                         </h1>
                     </header>
@@ -105,7 +105,7 @@ export function Dashboard() {
                             emptyMessage={getEmptyMessage()}
                         />
                     </section>
-                    
+
                     {isMovieDetailOpen && selectedMovie && (
                         <MovieDetail
                             movie={selectedMovie}
