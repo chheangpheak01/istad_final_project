@@ -30,10 +30,13 @@ export function Dashboard() {
     const dashboardRef = useRef(null);
 
     useEffect(() => {
-        if (dashboardRef.current) {
-            dashboardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-    }, [activeTab]);
+    if (dashboardRef.current) {
+        const yOffset = -65; 
+        const element = dashboardRef.current.getBoundingClientRect().top + window.scrollY + yOffset;
+        window.scrollTo({ top: element, behavior: "smooth" });
+    }
+}, [activeTab]);
+
 
     const handleSignOut = () => {
         localStorage.removeItem("moviehubToken");
