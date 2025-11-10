@@ -10,12 +10,13 @@ export function SignIn() {
     useAuthForm(navigate);
 
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-800">
-      {/* Wrapper adjusted for mobile */}
-      <div className="flex flex-col items-center justify-start min-h-screen p-4 sm:p-6 md:p-8 overflow-auto">
-        <div className="w-full max-w-md sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl px-2">
+    <div className="relative w-full min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-800 flex justify-center items-center">
+      {/* Wrapper to handle scrolling when keyboard opens */}
+      <div className="flex flex-col items-center w-full px-4 sm:px-6 md:px-8 overflow-auto">
+        <div className="w-full max-w-md sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mt-10 sm:mt-16 md:mt-20">
           {/* Card */}
           <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 p-6 sm:p-8 md:p-10 max-h-[90vh] overflow-auto">
+            
             {/* Header */}
             <AuthHeader isLogin={isLogin} />
 
