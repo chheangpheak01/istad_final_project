@@ -5,7 +5,16 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(),
-    tailwindcss(),
+  tailwindcss(),
   ],
   base: process.env.VITE_BASE_PATH || "istad_final_project/tree/main/src",
+  build: {
+    sourcemap: false,       
+    minify: "esbuild",     
+    rollupOptions: {
+      output: {
+        manualChunks: undefined, 
+      },
+    },
+  },
 })
