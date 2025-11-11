@@ -17,8 +17,7 @@ export default function Tabs({ activeTab, setActiveTab }) {
         <nav
             className="flex justify-center flex-wrap gap-3 mb-6"
             role="tablist"
-            aria-label="Movie categories"
-        >
+            aria-label="Movie categories">
             {tabs.map((tab) => (
                 <button
                     key={tab.key}
@@ -26,8 +25,7 @@ export default function Tabs({ activeTab, setActiveTab }) {
                     aria-selected={activeTab === tab.key}
                     tabIndex={activeTab === tab.key ? 0 : -1}
                     onClick={() => setActiveTab(tab.key)}
-                    className={buttonClasses(activeTab === tab.key)}
-                >
+                    className={buttonClasses(activeTab === tab.key)}>
                     <i className={`fas ${tab.icon} text-sm sm:text-base`} aria-hidden="true"></i>
                     <span>{tab.label}</span>
                 </button>

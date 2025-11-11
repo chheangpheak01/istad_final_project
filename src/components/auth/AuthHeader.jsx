@@ -1,5 +1,3 @@
-import React from "react";
-
 export function AuthHeader({ isLogin }) {
   return (
     <header className="text-center mb-4">
