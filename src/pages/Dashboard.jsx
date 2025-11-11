@@ -166,7 +166,7 @@ export function Dashboard() {
     const handleSignOut = () => {
         localStorage.removeItem("moviehubToken");
         localStorage.removeItem("currentUser");
-        navigate("/sign-in"); // ✅ Client-side navigation (works on Vercel & localhost)
+        navigate("/sign-in", {replace: true}); // ✅ Client-side navigation (works on Vercel & localhost)
     };
 
     const getEmptyMessage = () => {
