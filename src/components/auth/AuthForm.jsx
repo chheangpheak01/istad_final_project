@@ -8,7 +8,7 @@ export function AuthForm({ formik, showPassword, setShowPassword, isLogin, isLoa
     <form onSubmit={handleSubmit} className="space-y-3">
       {!isLogin && (
         <section>
-          <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1">Full Name</label>
+          <label className="block text-xs sm:text-base font-medium text-gray-200 mb-1">Full Name</label>
           <div className="relative">
             <UserIcon className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 transform -translate-y-1/2" />
             <input
@@ -17,7 +17,7 @@ export function AuthForm({ formik, showPassword, setShowPassword, isLogin, isLoa
               onChange={handleChange}
               value={values.name}
               placeholder="Your full name"
-              className="w-full pl-8 pr-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-xs sm:text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-pink-500"
+              className="w-full pl-8 pr-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm sm:text-base placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-pink-500"
             />
           </div>
           {errors.name && touched.name && <p className="mt-1 text-xs text-red-400">{errors.name}</p>}
@@ -25,7 +25,7 @@ export function AuthForm({ formik, showPassword, setShowPassword, isLogin, isLoa
       )}
 
       <section>
-        <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1">Email</label>
+        <label className="block text-xs sm:text-base font-medium text-gray-200 mb-1">Email</label>
         <div className="relative">
           <EnvelopeIcon className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 transform -translate-y-1/2" />
           <input
@@ -34,14 +34,14 @@ export function AuthForm({ formik, showPassword, setShowPassword, isLogin, isLoa
             onChange={handleChange}
             value={values.email}
             placeholder="you@example.com"
-            className="w-full pl-8 pr-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-xs sm:text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-pink-500"
+            className="w-full pl-8 pr-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm sm:text-base placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-pink-500"
           />
         </div>
         {errors.email && touched.email && <p className="mt-1 text-xs text-red-400">{errors.email}</p>}
       </section>
 
       <section>
-        <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1">Password</label>
+        <label className="block text-xs sm:text-base font-medium text-gray-200 mb-1">Password</label>
         <div className="relative">
           <LockClosedIcon className="w-4 h-4 text-gray-400 absolute left-2 top-1/2 transform -translate-y-1/2" />
           <input
@@ -50,7 +50,7 @@ export function AuthForm({ formik, showPassword, setShowPassword, isLogin, isLoa
             onChange={handleChange}
             value={values.password}
             placeholder="Enter your password"
-            className="w-full pl-8 pr-8 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-xs sm:text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-pink-500"
+            className="w-full pl-8 pr-8 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm sm:text-base placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-pink-500"
           />
           <button
             type="button"
