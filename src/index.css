@@ -31,3 +31,12 @@ html, body {
   padding: 0;
   overflow-x: hidden;
 }
+
+input,
+textarea,
+select {
+  font-size: 16px !important;
+  max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+}
