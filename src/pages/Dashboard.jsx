@@ -164,7 +164,7 @@ export function Dashboard() {
     const handleSignOut = () => {
         localStorage.removeItem("moviehubToken");
         localStorage.removeItem("currentUser");
-        window.location.assign("/sign-in");
+        window.location.replace("/sign-in");
     };
 
     const getEmptyMessage = () => {
