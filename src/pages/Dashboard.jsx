@@ -127,11 +127,10 @@ import MovieTable from "../components/dashboard/MovieTable";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { useEffect, useRef, useState } from "react";
 import { MovieDetail } from "../components/movieDetail/MovieDetail";
-import { useNavigate } from "react-router-dom"; // ✅ Added
+
 
 export function Dashboard() {
-    const navigate = useNavigate(); // ✅ Added
-
+    
     const {
         activeTab,
         setActiveTab,
@@ -162,11 +161,10 @@ export function Dashboard() {
         }
     }, [activeTab]);
 
-    // ✅ Updated sign-out handler
     const handleSignOut = () => {
         localStorage.removeItem("moviehubToken");
         localStorage.removeItem("currentUser");
-        navigate("/sign-in", {replace: true}); // ✅ Client-side navigation (works on Vercel & localhost)
+        window.location.assign("/sign-in");
     };
 
     const getEmptyMessage = () => {
