@@ -5,8 +5,8 @@
 // import { useDashboardData } from "../hooks/useDashboardData";
 // import { useEffect, useRef, useState } from "react";
 // import { MovieDetail } from "../components/movieDetail/MovieDetail";
-
 // export function Dashboard() {
+    
 //     const {
 //         activeTab,
 //         setActiveTab,
@@ -40,7 +40,7 @@
 //     const handleSignOut = () => {
 //         localStorage.removeItem("moviehubToken");
 //         localStorage.removeItem("currentUser");
-//         window.location.href = "/sign-in";
+//         window.location.replace("/sign-in");
 //     };
 
 //     const getEmptyMessage = () => {
@@ -120,6 +120,7 @@
 //         </div>
 //     );
 // }
+
 import Sidebar from "../components/dashboard/Sidebar";
 import Tabs from "../components/dashboard/Tabs";
 import SearchBox from "../components/dashboard/SearchBox";
@@ -127,10 +128,11 @@ import MovieTable from "../components/dashboard/MovieTable";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { useEffect, useRef, useState } from "react";
 import { MovieDetail } from "../components/movieDetail/MovieDetail";
-
+import { useNavigate } from "react-router-dom"; // ✅ Added
 
 export function Dashboard() {
-    
+    const navigate = useNavigate(); // ✅ Added
+
     const {
         activeTab,
         setActiveTab,
@@ -161,10 +163,12 @@ export function Dashboard() {
         }
     }, [activeTab]);
 
+    // ✅ Updated sign-out handler
     const handleSignOut = () => {
-        localStorage.removeItem("moviehubToken");
-        localStorage.removeItem("currentUser");
-        window.location.replace("/sign-in");
+        localStorage.clear(); // clear all keys
+        setTimeout(() => {
+            navigate("/sign-in", { replace: true }); // SPA-safe navigation
+        }, 50); // small delay ensures localStorage clears before redirect
     };
 
     const getEmptyMessage = () => {
@@ -244,3 +248,4 @@ export function Dashboard() {
         </div>
     );
 }
+
